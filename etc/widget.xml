@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!-- /**
+ * Magiccart 
+ * @category    Magiccart 
+ * @copyright   Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license     http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2016-02-23 18:59:34
+ * @@Modify Date: 2018-06-29 12:16:14
+ * @@Function:
+ */ -->
+ 
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Magento/Widget/etc/widget.xsd">
+<!-- 	<widget id="magiccart_lookbook" class="Magiccart\Lookbook\Block\Widget\Lookbook">
+		<label translate="true">Lookbook Products Widget</label>
+		<description>Lookbook Products</description>
+		<parameters>
+			<parameter name="identifier" xsi:type="select" source_model="Magiccart\Lookbook\Model\Widget\Config\Lookbook" required="true" visible="true" sort_order="0" >
+				<label translate="true">Identifier</label>
+			</parameter>
+            <parameter name="template" xsi:type="select" required="true" visible="true">
+                <label translate="true">Template</label>
+                <options>
+                    <option name="default" value="lookbook.phtml" selected="true">
+                        <label translate="true">Default</label>
+                    </option>
+                </options>
+            </parameter>
+		</parameters>
+	</widget> -->
+	<widget id="magiccart_lookbook_product" class="Magiccart\Lookbook\Block\Widget\Product">
+		<label translate="true">Lookbook Products Widget</label>
+		<description>Lookbook Products</description>
+		<parameters>
+			<parameter name="identifier" xsi:type="select" source_model="Magiccart\Lookbook\Model\Widget\Config\Product" required="true" visible="true" sort_order="0" >
+				<label translate="true">Identifier</label>
+			</parameter>
+            <parameter name="template" xsi:type="select" required="true" visible="true">
+                <label translate="true">Template</label>
+                <options>
+                    <option name="default" value="product.phtml" selected="true">
+                        <label translate="true">Default</label>
+                    </option>
+                </options>
+            </parameter>
+		</parameters>
+	</widget>
+	<widget id="magiccart_lookbook_productslider" class="Magiccart\Lookbook\Block\Widget\ProductSlider">
+		<label translate="true">Lookbook Products Slider Widget</label>
+		<description>Lookbook Products Slider</description>
+		<parameters>
+			<parameter name="identifiers" xsi:type="multiselect" source_model="Magiccart\Lookbook\Model\Widget\Config\ProductSlider" required="true" visible="true" sort_order="0" >
+				<label translate="true">Identifier</label>
+			</parameter>
+            <parameter name="template" xsi:type="select" required="true" visible="true">
+                <label translate="true">Template</label>
+                <options>
+                    <option name="default" value="productslider.phtml" selected="true">
+                        <label translate="true">Default</label>
+                    </option>
+                </options>
+            </parameter>
+		</parameters>
+	</widget>
+</widgets>

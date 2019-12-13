@@ -1,0 +1,154 @@
+<?php
+/**
+ * Magiccart 
+ * @category 	Magiccart 
+ * @copyright 	Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license 	http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2018-05-16 22:57:12
+ * @@Modify Date: 2018-06-21 00:45:12
+ * @@Function:
+ */
+ ?>
+<?php
+$uniqid = uniqid();
+$selector = 'alo-content-'.$uniqid;
+$options = json_decode($this->getOptions(), true);
+if(!isset($options['magic_pin'])) return;
+$magic_pin = $options['magic_pin'];
+$productIds = array();
+foreach ($magic_pin as $key => $item) {
+    if(isset($item['product_id'])) $productIds[$key] = $item['product_id'];
+    if($key == 'canvas') $magic_pin['canvas']['src'] = $this->getImageUrl($this->getImage());
+}
+// var_dump($productIds);
+$products = $this->getProductCollection($productIds);
+foreach ($productIds as $key => $id) {
+    $product = $products->getItemByColumnValue('entity_id', $id );
+    if($product){
+        $icon = '<span class="nasa-marker-icon-bg">' . $product->getPrice() . '</span>';
+        $add_options = array(
+            'marker_pin'    => $icon,
+            'markerSrc'     => $icon,
+            'product_title' => $product->getName(),
+            'product_link'  => $product->getUrl(),
+            // 'product_img'   => $product->getImageUrl(),
+        );
+        $magic_pin[$key] = array_merge($magic_pin[$key], $add_options);
+    }
+}
+
+$show_img = true;
+$show_price = true;
+$pin_rand_id = 'magic_pin_' . $uniqid;
+$data_pin = json_encode(array($pin_rand_id => $magic_pin));
+?>
+<div class="<?php echo $selector ?>">
+    <?php echo $this->getTitle() ? '<h2 class="title item">' . '<span>' . $this->getTitle() . '</span>' . '</h2>' : '' ?>
+    <div class="lookbook">
+        <div class="nasa-inner-wrap nasa-pin-banner-wrap" data-pin="<?php /* @escapeNotVerified */ echo $this->escapeHtml($data_pin) ?>">
+            <span class="nasa-wrap-relative-image">
+                <a href="<?php /* @escapeNotVerified */ echo $this->getData('url') ? $this->getData('url') : '#' ?>">
+                    <img class="nasa_pin_pb_image" src="<?php /* @escapeNotVerified */ echo $this->getImageUrl($this->getImage())?>" easypin_id="<?php echo $pin_rand_id ?>"  data-easypin_id="<?php /* @escapeNotVerified */ echo $pin_rand_id ?>" alt="<?php /* @escapeNotVerified */ echo $this->getTitle() ?>" />
+                </a>
+            </span>
+            <div style="display:none;" class="nasa-easypin-tpl" easypin-tpl>
+                <div class="nasa-popover-clone">
+                    <div class="exPopoverContainer">
+                        <div class="popBg borderRadius"></div>
+                        <div class="popBody">
+                            <div class="nasa-product-pin">
+                                <div class="nasa-product-pin-wrap">
+                                    <div class="row">
+                                        <div class="large-12 columns">
+                                            <a title="{[product_title]}" href="{[product_link]}">
+                                                <?php
+                                                    echo $show_img ? '<div class="image-wrap">{[product_img]}</div>' : '';
+                                                ?>
+                                                <div class="title-wrap">
+                                                    <h5>{[product_title]}</h5>
+                                                </div>
+                                            </a>
+                                            <?php
+                                             echo $show_price ? '<div class="price nasa-price-pin" data-product_id="{[product_id]}"></div>' : '';
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nasa-marker-clone">
+                    <div>
+                        <span class="nasa-marker-icon-wrap">{[marker_pin]}<span class="nasa-action-effect"></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    require([
+        'jquery',
+        'magiccart/easing',
+        'magiccart/easypin',
+        ], function($, easing, easypin){
+            if($('.nasa-pin-banner-wrap').length > 0) {
+                $('.nasa-pin-banner-wrap').each(function() {
+                    var _this = $(this);
+                    if(!$(_this).hasClass('nasa-inited')) {
+                        $(_this).addClass('nasa-inited');
+                        var _init = $(_this).data('pin');
+                        var _img = $(_this).find('img.nasa_pin_pb_image');
+                        
+                        if(_init && $(_img).length >0) {
+                            $(_img).easypinShow({
+                                // data: _init,
+                                data: '<?php echo $data_pin ?>',
+                                responsive: true,
+                                popover: {
+                                    show: false,
+                                    animate: false
+                                },
+                                each: function(index, data) {
+                                    return data;
+                                },
+                                error: function() {
+                                    
+                                },
+                                success: function() {
+                                	console.log('success');
+                                    // if($(_this).find('.nasa-product-pin .price.nasa-price-pin').length > 0){
+                                    //     $(_this).find('.nasa-product-pin .price.nasa-price-pin').each(function() {
+                                    //         var _pid = $(this).attr('data-product_id');
+                                    //         if($(_this).find('.nasa-price-pin-' + _pid).length > 0) {
+                                    //             $(this).html($(_this).find('.nasa-price-pin-' + _pid).html());
+                                    //         }
+                                    //     });
+                                    // }
+                                    
+                                    // if($(_this).hasClass('nasa-has-effect')) {
+                                    //     setInterval(function() {
+                                    //         $(_this).find('.nasa-marker-icon-wrap').toggleClass('nasa-effect');
+                                    //     }, 2400);
+                                    // }
+                                }
+                            });
+                        }
+                        
+                        $(_img).click(function() {
+                            $(_this).find('.easypin-popover').hide();
+                        });
+                        
+                        $(document).on('keyup', function(e){
+                            if (e.keyCode === 27){
+                                $(_img).click();
+                            }
+                        });
+                    }
+                });
+            }
+    });
+</script>
+

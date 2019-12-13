@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!-- /**
+ * Magiccart 
+ * @category    Magiccart 
+ * @copyright   Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license     http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2018-05-16 18:59:34
+ * @@Modify Date: 2018-06-27 16:15:24
+ * @@Function:
+ */ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+    	<update id="magiccart" title="Magiccart" module="Magiccart_Lookbook" sortOrder="10" resource="Magiccart_Lookbook::magiccart"/>
+
+	        <add id="Magiccart_Lookbook::lookbook" title="Lookbook" module="Magiccart_Lookbook" sortOrder="10" parent="magiccart" resource="Magiccart_Lookbook::lookbook"/>
+
+<!-- 				<add id="Magiccart_Lookbook::lookbook_index" title="Lookbook" module="Magiccart_Lookbook" sortOrder="10" parent="Magiccart_Lookbook::lookbook" action="lookbook/index" resource="Magiccart_Lookbook::lookbook_index"/> -->
+
+				<add id="Magiccart_Lookbook::lookbook_index" title="Product" module="Magiccart_Lookbook" sortOrder="10" parent="Magiccart_Lookbook::lookbook" action="lookbook/product" resource="Magiccart_Lookbook::lookbook_product"/>
+    </menu>
+</config>

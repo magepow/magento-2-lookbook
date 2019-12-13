@@ -1,0 +1,217 @@
+<?php
+/**
+ * Magiccart 
+ * @category 	Magiccart 
+ * @copyright 	Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license 	http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2018-05-16 22:57:12
+ * @@Modify Date: 2018-06-19 17:32:56
+ * @@Function:
+ */
+ ?>
+<style type="text/css">
+    .magic_pin_image_wrap {position: relative; text-align: center; width: 100%; }
+    .magic-wrap-relative-image {display: inline-block; }
+    .magic-wrap-relative-image img.magic_pin_image,
+    .select2-container {display: block; } 
+    .select2-container.inited {margin-top: 10px; }
+    .select2-container.inited .select2-choice .select2-arrow {background: none; border: none; }
+    .easy-delete {z-index: 9999; }
+    .easy-submit {display: block; width: 100%; margin: 20px auto 0px; cursor: pointer; padding: 0; }
+    .container-wrap-pin{text-align: left; margin-left: -300px;} 
+    .magic_pin_image_wrap{margin: 35px auto; width: calc(100% + 300px); } 
+    .select_classes{margin-top: 15px;width: 100%;text-align: center;border-radius: 3px;background: #f2f2f2;border: solid 1px #aeaeae;padding: 3px 0;}
+</style>
+<?php
+	$lookbook 	= $this->getData('lookbook');
+	$params = [
+	    'area' => 'adminhtml'
+	];
+	$plusMarker = $this->assetRepository->createAsset('Magiccart_Lookbook::js/plugins/images/plus-marker.png', $params);
+	$plusMarker = $plusMarker->getUrl();
+	$editIco  	= $this->assetRepository->createAsset('Magiccart_Lookbook::js/plugins/images/edit.png');
+	$editIco    = $editIco->getUrl();
+	$removeIco  = $this->assetRepository->createAsset('Magiccart_Lookbook::js/plugins/images/remove.png');
+	$removeIco  = $removeIco->getUrl();
+	$image_src  = $lookbook->getImage();
+	$_width = 0;
+	$_height = 0 ;
+	if($image_src){
+		$imageInfo 	= $this->getImageInfo($image_src);
+		if($imageInfo){
+			$_width 	= $imageInfo->getOriginalWidth();
+			$_height 	= $imageInfo->getOriginalHeight();			
+		}
+		$image_src 	= $this->getImageUrl($image_src);
+	} 
+	$_options = $lookbook->getOptions();
+	if($_options){
+		$_optionsArr = json_decode($_options, true);
+		if(isset($_optionsArr['magic_pin'])){
+			foreach ($_optionsArr['magic_pin'] as $key => $value) {
+				if(isset($value['content'])){
+					$_optionsArr['magic_pin'][$key]['content'] = $block->escapeJsQuote($value['content'], '"');
+				}			
+			}
+		}
+		if(isset($_optionsArr['magic_pin']['canvas'])){
+		    $_optionsArr['magic_pin']['canvas'] = array(
+		        'src' => $image_src,
+		        'width' => $_width,
+		        'height' => $_height
+		    );
+		}
+
+		$_options = json_encode($_optionsArr);
+
+	} else {
+		$_options = '{}';
+	}
+
+ 
+	$params = [
+	    'area' => 'frontend'
+	];
+?>
+<script id="wrap-magic-pin" type="text/template">
+<div class="container-wrap-pin">
+    <input id="magic_options_pin" type="hidden" name="options" value="<?php echo $_options ?>" />
+    <div class="magic_pin_image_wrap" style="width: <?php echo ($_width + 50)  ?>px">
+        <span class="magic-wrap-relative-image">
+            <img src="<?php echo $image_src; ?>" class="pin magic_pin_image <?php echo $image_src ? '' : 'no-image'; ?>" easypin-id="magic_pin" />
+        </span>
+        
+        <div class="easy-modal" style="display:none;" modal-position="free">
+            <?php echo __('Find product'); ?>
+            <textarea name="content" class="hidden"></textarea>
+            <input class="select_product" name="product_id" type="text" value="" placeholder="Search product" />
+            <input class="select_classes" name="classes" type="text" value="" placeholder="Class CSS" />
+            <input type="button" value="<?php echo __('Save pin') ?>" class="easy-submit" />
+        </div>
+        
+        <!-- popover -->
+        <div style="display:none; width: 200px;" shadow="true" popover>
+            <div style="width:100%;text-align:center;">{[content]}</div>
+        </div>
+    </div>
+</div>
+</script>
+<script type="text/javascript">
+	require([
+		'jquery',
+		'magiccart/easing',
+		'magiccart/easypin',
+		'magiccart/select2',
+		], function($, easing, easypin){
+		    var magic_pin = {
+		        // 'url_search': '<?php echo $this->getUrl('search/ajax/suggest', $params); ?>',
+		        'url_search': '<?php echo $this->getUrl('mui/index/render/'); ?>',
+		        '_nonce': "_nonce"
+		    };
+		    
+		    function initSelect2($, _obj) {
+		        if(!$(_obj).hasClass('inited')) {
+		            
+		            $(_obj).select2({
+		                minimumInputLength: 3,
+		                ajax: {
+		                    url: magic_pin.url_search,
+		                    dataType: 'json',
+		                    delay: 250,
+		                    data: function(terms) {
+		                        return {
+		                            // q: terms,
+		                            search: terms,
+		                            filter: {'name' :terms, 'placeholder': true},
+		                            paging: {'pageSize' :50, 'current': 1},
+		                            sorting: {'field' : 'entity_id', 'direction': 'asc'},
+		                            security: magic_pin._nonce,
+		                            namespace:'product_listing',
+		                            isAjax:true,
+		                        };
+		                    },
+		                    results: function(data) {
+		                        var results = [];
+		                        var items = data.items;
+								$.each( items, function( key, item ) {
+		                            results.push({
+		                                id: item.entity_id,
+		                                text: item.name + '(#' + item.entity_id + ')'
+		                            });
+								});
+
+		                        return {
+		                            results: results
+		                        };
+		                    }
+		                },
+		                initSelection: function(element, callback) {
+		                    var id = $(element).val();
+
+		                    if (id !== '') {
+		                        $.ajax(magic_pin.url_search + '&term=' + id + '&security=' + magic_pin._nonce, {
+		                            dataType: 'json'
+		                        }).done(function(data) {
+		                            callback(data);
+		                        });
+		                    }
+		                }
+		            });
+
+		            $(_obj).addClass('inited');
+		            
+		            $(_obj).change(function() {
+		                var theText = $(_obj).select2('data').text;
+		                var _textarea = theText;
+		                $(_obj).parents('.modalContext').find('textarea').val(_textarea);
+		            });
+		        }
+		    }
+		    
+		    $(document).ready(function ($) {
+		        $('#magic_image').parent().append($('#wrap-magic-pin').html());
+		        var _instance = null;
+		        if(!$('.magic_pin_image').hasClass('no-image')) {
+		            _instance = $('.pin').easypin({
+		                init: '<?php echo $_options ?>',
+		                markerSrc: 	'<?php echo $plusMarker; ?>',
+		                editSrc: 	'<?php echo $editIco; ?>',
+		                deleteSrc: 	'<?php echo $removeIco; ?>',
+		                modalWidth: 400,
+		                
+		                /**
+		                 * Fixed position when drop
+		                 */
+		                drop: function(x, y, element) {
+		                    x = x + 15;
+		                    y = y + 48;
+		                    element.attr('data-x', x);
+		                    element.attr('data-y', y);
+		                },
+		                        
+		                done: function() {
+		                    return true;
+		                }
+		            });
+		        }
+		        
+		        $(document).on('click', '.easy-edit', function () {
+		            $('.magic-wrap-relative-image .select_product').each(function() {
+		                initSelect2($, this);
+		            });
+		        });
+		        
+				$("#edit_form").submit(function(){
+					if(_instance) {
+			            _instance.easypin.event("get.coordinates", function(_instance, data, params) {
+			                $('#magic_options_pin').val(data);
+			            });
+					    _instance.easypin.fire("get.coordinates", {}, function(data) {
+			                return JSON.stringify(data);
+			            });
+					}
+				});
+		    });
+		});
+</script>

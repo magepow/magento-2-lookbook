@@ -1,0 +1,136 @@
+<?php
+/**
+ * Magiccart 
+ * @category 	Magiccart 
+ * @copyright 	Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license 	http://www.magiccart.net/license-agreement.html
+ * @Author: DOng NGuyen<nguyen@dvn.com>
+ * @@Create Date: 2018-05-16 22:57:12
+ * @@Modify Date: 2018-06-29 17:45:08
+ * @@Function:
+ */
+ ?>
+<?php
+$uniqid     = uniqid();
+$selector   = 'alo-lookbook-'.$uniqid;
+$options    = json_decode($this->getOptions(), true);
+if(!isset($options['magic_pin'])) return;
+$magic_pin  = $options['magic_pin'];
+$productIds = array();
+$image_pin  = $this->getPinImageUrl($this->getData('image'));
+$width_image = 0;
+foreach ($magic_pin as $key => $item) {
+    if(isset($item['product_id'])) $productIds[$key] = $item['product_id'];
+    if($key == 'canvas'){
+    	$magic_pin['canvas']['src'] = $this->getPinImageUrl($this->getData('image'));
+    	$width_image = $magic_pin['canvas']['width'];
+    } 
+}
+$image = 'category_page_grid';
+$pos = $block->getPositioned();
+$products = $this->getProductCollection($productIds);
+
+foreach ($productIds as $key => $id) {
+    $_product = $products->getItemByColumnValue('entity_id', $id );
+    if($_product){
+        $icon = '<span class="magic-marker-icon-bg">' . $block->getProductPrice($_product) . '</span>';
+        $productImage = $block->getImage($_product, $image);
+        if ($pos != null) {
+            $position = ' style="left:' . $productImage->getWidth() . 'px;'
+                . 'top:' . $productImage->getHeight() . 'px;"';
+        }
+        $name = $block->escapeJsQuote($_product->getName(), '"');
+        $image_html = preg_replace('/alt=".*?"/', 'alt="'. $name .'"', $productImage->toHtml()); // fixed name have quotes
+        $classes = isset($magic_pin[$key]['classes']) ? $magic_pin[$key]['classes'] . 'info' :  'info';
+        $add_options = array(
+            'classes'       => $classes,
+            'marker_pin'    => $icon,
+            'markerSrc'     => $icon,
+            'product_title' => $_product->getName(),
+            'product_link'  => $_product->getProductUrl(),
+            'product_img'   => $image_html,
+        );
+        $magic_pin[$key] = array_merge($magic_pin[$key], $add_options);
+    }
+}
+
+$show_img = true;
+$show_price = true;
+$pin_rand_id = 'magic_pin_' . $uniqid;
+// if(is_array($magic_pin)){
+//     foreach ($magic_pin as $key => $value) {
+//         if(isset($value['content'])){
+//             $magic_pin[$key]['content'] = $block->escapeJsQuote($value['content'], '"');
+//         }           
+//     }
+// }
+$data_pin = json_encode(array($pin_rand_id => $magic_pin));
+?>
+<div class="<?php echo $selector ?>">
+    <?php echo $this->getTitle() ? '<h2 class="title item">' . '<span>' . $this->getTitle() . '</span>' . '</h2>' : '' ?>
+    <div class="lookbook">
+        <div style="max-width:<?php echo $width_image ?>px" class="magic-inner-wrap magic-pin-banner-wrap" data-pin="<?php /* @escapeNotVerified */ echo $this->escapeHtml($data_pin) ?>">
+            <img class="magic_pin_pb_image" src="<?php /* @escapeNotVerified */ echo $image_pin ?>" data-easypin-id="<?php echo $pin_rand_id ?>" alt="<?php /* @escapeNotVerified */ echo $this->getTitle() ?>" />
+			<div style="display:none;" class="magic-easypin-tpl">
+			    <popover>
+			        <div style="width:140px;height:auto;background-color:orange;" class="{[classes]}">
+                        <a title="{[product_title]}" href="{[product_link]}">
+                            <div class="image-wrap">{[product_img]}</div>
+                            <div class="title-wrap">
+                                <h5>{[product_title]}</h5>
+                            </div>
+                            <div class="price-wrap">{[marker_pin]}</div>
+			            </a>
+			        </div>
+			    </popover>
+			    <marker>
+			        <div style="border:solid 1px #000;width:50px;height:50px;background-color:red;">&nbsp;</div>
+			    </marker>
+			</div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    require([
+        'jquery',
+        'magiccart/easing',
+        'magiccart/easypin',
+        ], function($, easing, easypinShow){
+            if($('.magic-pin-banner-wrap').length > 0) {
+                $('.magic-pin-banner-wrap').each(function() {
+                    var _this = $(this);
+                    if(!$(_this).hasClass('magic-inited')) {
+                        $(_this).addClass('magic-inited');
+                        var _init   = $(_this).data('pin');
+                        var _img    = $(_this).find('img.magic_pin_pb_image');
+                        var _tpl    = $(_this).find('.magic-easypin-tpl')
+                        if(_init && $(_img).length >0) {
+                            _img.attr('easypin-id', _img.data('easypin-id'));
+                            _tpl.attr('easypin-tpl', '');
+                            $(_img).easypinShow({
+                                data: _init,
+                                responsive: true,
+                                popover: { show: false, animate: false },
+                                each: function(index, data) {
+                                    return data;
+                                },
+                                error: function() {
+                                    
+                                },
+                                success: function() {
+                                }
+                            });
+                        }
+                        
+                        $(_img).click(function() {
+                            $(_this).find('.easypin-popover').hide();
+                        });
+                        
+                        $(document).on('keyup', function(e){
+                            if (e.keyCode === 27) $(_img).click();
+                        });
+                    }
+                });
+            }
+    });
+</script>
