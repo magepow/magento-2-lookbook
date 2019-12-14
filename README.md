@@ -8,7 +8,7 @@ Run the following command in Magento 2 root folder:
 `php bin/magento setup:upgrade`
 
 `php bin/magento setup:static-content:deploy -f`
-## 2. Magiccart Lookbook user guide
+## Magiccart Lookbook user guide
 [USE GUIDE](https://docs.alothemes.com/m2/theme/gecko/#sub70)
 
 [![Latest Stable Version](https://poser.pugx.org/magiccart/module-lookbook/v/stable)](https://packagist.org/packages/magiccart/module-lookbook)
