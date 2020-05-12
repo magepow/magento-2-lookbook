@@ -164,7 +164,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
      */
     protected function _prepareMassaction()
     {
-        $this->setMassactionIdField('entity_id');
+        $this->setMassactionIdField('lookbook_id');
         $this->getMassactionBlock()->setFormFieldName('lookbook');
 
         $this->getMassactionBlock()->addItem(
