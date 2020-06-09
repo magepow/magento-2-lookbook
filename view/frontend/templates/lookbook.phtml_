@@ -94,6 +94,7 @@ $data_pin = json_encode(array($pin_rand_id => $magic_pin));
         'magiccart/easing',
         'magiccart/easypin',
         ], function($, easing, easypin){
+            "use strict";
             if($('.nasa-pin-banner-wrap').length > 0) {
                 $('.nasa-pin-banner-wrap').each(function() {
                     var _this = $(this);

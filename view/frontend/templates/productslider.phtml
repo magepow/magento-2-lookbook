@@ -129,6 +129,7 @@ $data_pin = json_encode(array($pin_rand_id => $magic_pin));
         'magiccart/easypin',
         'magiccart/slick',
         ], function($, easing, easypinShow, slick){
+            "use strict";
 			$( document ).ready(function($) {
 	            var el  = $('.<?php echo $selector_slider ?>');
 	            var iClass = '.alo-item';
