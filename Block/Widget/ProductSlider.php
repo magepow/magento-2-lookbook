@@ -21,7 +21,7 @@ class ProductSlider extends Product
     {
 		$store = $this->_storeManager->getStore()->getStoreId();
         $identifiers = $this->getIdentifiers();
-        $collection = $this->_lookbook->getCollection()->addFieldToSelect('*')
+        $collection  = $this->lookbookFactory->create()->getCollection()->addFieldToSelect('*')
                         ->addFieldToFilter('identifier', array('in' => $identifiers))
                         ->addFieldToFilter('type_id', $this->_typeId)
                         ->addFieldToFilter('stores',array( array('finset' => 0), array('finset' => $store)));
@@ -32,6 +32,11 @@ class ProductSlider extends Product
         }
         $this->_productSlider = $collection;
         parent::_construct();
+    }
+
+    public function getProductSlider()
+    {
+        return $this->_productSlider;
     }
 
     public function getSlider()
