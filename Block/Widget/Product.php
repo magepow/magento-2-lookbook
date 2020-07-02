@@ -94,34 +94,7 @@ class Product extends \Magento\Catalog\Block\Product\AbstractProduct implements 
 
     public function getQuickedit()
     {
-        $lookbook = $this->getLookbook();
-        if($lookbook){
-            $id = $lookbook->getId();
-            $routeParams = [
-                'lookbook_id' => $id
-            ];
-            $class      = basename(__FILE__, ".php");
-            $adminPath  = 'lookbook/' . strtolower($class) . '/edit';
-            $editUrl    = $this->getAdminUrl($adminPath, $routeParams);
-            $moduleName = $this->getModuleName();
-            $moduleName = str_replace('_', ' > ', $moduleName);
-            $quickedit  = [
-                [
-                    'title' => __('%1 > %2 Id is: %3', $moduleName, $class, $id),
-                    'url'   => $editUrl
-                ],
-                [
-                    'title' => __('%1 > %2 Identifier is: %3', $moduleName, $class, $lookbook->getIdentifier()),
-                    'url'   => $editUrl
-                ],
-                [
-                    'title' => __('Edit'),
-                    'url'   => $editUrl
-                ]
-            ];
-        }
-
-        return $quickedit;      
+        return;      
     }
 
     public function getProductCollection($producIds)
