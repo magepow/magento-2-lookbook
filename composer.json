@@ -1,6 +1,9 @@
 {
   "name": "magiccart/lookbook",
   "description": "Pin product to banner easy.",
+  "require": {
+    "magiccart/community" : ">=1.0"
+  },
   "type": "magento2-module",
   "license": [
     "OSL-3.0",
