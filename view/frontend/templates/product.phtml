@@ -73,18 +73,22 @@ $data_pin = json_encode(array($pin_rand_id => $magic_pin));
             <img class="magic_pin_pb_image" src="<?php /* @escapeNotVerified */ echo $image_pin ?>" data-easypin-id="<?php echo $pin_rand_id ?>" alt="<?php /* @escapeNotVerified */ echo $this->getTitle() ?>" />
 			<div style="display:none;" class="magic-easypin-tpl">
 			    <popover>
-			        <div style="width:140px;height:auto;background-color:orange;" class="{[classes]}">
-                        <a title="{[product_title]}" href="{[product_link]}">
-                            <div class="image-wrap">{[product_img]}</div>
-                            <div class="title-wrap">
-                                <h5>{[product_title]}</h5>
+			        <div style="height:auto;" class="{[classes]}">
+                        <div class="main-product-pin">
+                            <div class="product-pin-wrap">
+                                <a title="{[product_title]}" href="{[product_link]}">
+                                    <div class="image-wrap">{[product_img]}</div>
+                                    <div class="title-wrap">
+                                        <h5>{[product_title]}</h5>
+                                    </div>
+                                    <div class="price-wrap">{[marker_pin]}</div>
+        			            </a>
                             </div>
-                            <div class="price-wrap">{[marker_pin]}</div>
-			            </a>
+                        </div>
 			        </div>
 			    </popover>
-			    <marker>
-			        <div style="border:solid 1px #000;width:50px;height:50px;background-color:red;">&nbsp;</div>
+			    <marker class="marker">
+			        <div>&nbsp;</div>
 			    </marker>
 			</div>
         </div>
