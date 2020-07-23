@@ -6,7 +6,7 @@
  * @license     http://www.magiccart.net/license-agreement.html
  * @Author: DOng NGuyen<nguyen@dvn.com>
  * @@Create Date: 2016-01-05 10:40:51
- * @@Modify Date: 2020-04-26 17:20:42
+ * @@Modify Date: 2020-07-23 17:20:42
  * @@Function:
  */
 
@@ -63,6 +63,20 @@ class Product extends \Magento\Catalog\Block\Product\AbstractProduct implements 
 
     protected function _construct()
     {
+        $lookbook = $this->getLookbook();
+        if(!$lookbook){
+            echo '<div class="message-error error message">Identifier "'. $this->getIdentifier() . '" not exist.</div> ';          
+            return;
+        }
+        $data = $lookbook->getData();
+        $this->addData($data);
+        parent::_construct();
+    }
+
+    public function getLookbook()
+    {
+        if($this->getData('lookbook')) $this->_lookbook = $this->getData('lookbook');
+        if($this->_lookbook) return $this->_lookbook;
         $store = $this->_storeManager->getStore()->getStoreId();
         $identifier = $this->getIdentifier();
         $collection = $this->lookbookFactory->create()->getCollection()->addFieldToSelect('*')
@@ -72,18 +86,7 @@ class Product extends \Magento\Catalog\Block\Product\AbstractProduct implements 
         $collection->getSelect()->order('order','ASC');
 
         $this->_lookbook = $collection->getFirstItem();
-        if(!$this->_lookbook){
-            echo '<div class="message-error error message">Identifier "'. $identifier . '" not exist.</div> ';          
-            return;
-        }
-        $data = $this->_lookbook->getData();
-        $this->addData($data);
-        parent::_construct();
-    }
-
-    public function getLookbook()
-    {
-        return $this->_lookbook;
+        return  $this->_lookbook;
     }
 
     public function getAdminUrl($adminPath, $routeParams=[], $storeCode = 'default' ) 

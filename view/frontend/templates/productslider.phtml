@@ -1,12 +1,12 @@
 <?php
 /**
  * Magiccart 
- * @category 	Magiccart 
- * @copyright 	Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
- * @license 	http://www.magiccart.net/license-agreement.html
+ * @category    Magiccart 
+ * @copyright   Copyright (c) 2014 Magiccart (http://www.magiccart.net/) 
+ * @license     http://www.magiccart.net/license-agreement.html
  * @Author: DOng NGuyen<nguyen@dvn.com>
  * @@Create Date: 2018-05-16 22:57:12
- * @@Modify Date: 2018-06-29 17:40:38
+ * @@Modify Date: 2020-07-23 17:40:38
  * @@Function:
  */
  ?>
@@ -16,188 +16,43 @@ if(!$slider) return;
 $selector_slider = 'alo-content-slider'. uniqid();
 ?>
 <div class="<?php echo $selector_slider ?> alo-lookbook"
-    data-autoplay="true" 
-    data-arrows="true" 
-    data-autoplay-speed="6000" 
-    data-dots="true" 
-    data-infinite="true" 
-    data-padding="0" 
-    data-vertical="false" 
-    data-vertical-swiping="false"
-    data-rows="1" 
-    data-slides-to-show="5" 
-    data-swipe-to-slide="true" 
-    data-adaptive-height="true"
-    data-responsive='[{"breakpoint": "1921", "settings": {"slidesToShow": "5"}}, {"breakpoint": "1920", "settings": {"slidesToShow": "5"}}, {"breakpoint": "1200", "settings": {"slidesToShow": "4"}}, {"breakpoint": "992", "settings": {"slidesToShow": "3"}}, {"breakpoint": "768", "settings": {"slidesToShow": "2"}}, {"breakpoint": "640", "settings": {"slidesToShow": "2"}}, {"breakpoint": "480", "settings": {"slidesToShow": "1"}}, {"breakpoint": "361", "settings": {"slidesToShow": "1"}}, {"breakpoint": "1", "settings": {"slidesToShow": "1"}}]'
+    <?php foreach ($this->getFrontendCfg() as $opt) :?>
+        data-<?php /* @escapeNotVerified */ echo $opt ?>='<?php /* @escapeNotVerified */ echo $this->getData($opt) ?>'
+    <?php endforeach;?>
 >
 <?php
 foreach ($slider as $lookbook) {
-$uniqid     = uniqid();
-$selector   = 'lookbook-'.$uniqid;
-$options    = json_decode($lookbook->getOptions(), true);
-if(!isset($options['magic_pin'])) return;
-$magic_pin  = $options['magic_pin'];
-$productIds = array();
-$image_pin  = $this->getPinImageUrl($lookbook->getData('image'));
-foreach ($magic_pin as $key => $item) {
-    if(isset($item['product_id'])) $productIds[$key] = $item['product_id'];
-    if($key == 'canvas'){
-        $magic_pin['canvas']['src'] = $this->getPinImageUrl($lookbook->getData('image'));
-        $width_image = $magic_pin['canvas']['width'];
-    } 
-}
-$image = 'category_page_grid';
-$pos = $block->getPositioned();
-$products = $this->getProductCollection($productIds);
-foreach ($productIds as $key => $id) {
-    $_product = $products->getItemByColumnValue('entity_id', $id );
-    if($_product){
-        $icon = '<span class="magic-marker-icon-bg">' . $block->getProductPrice($_product) . '</span>';
-        $productImage = $block->getImage($_product, $image);
-        if ($pos != null) {
-            $position = ' style="left:' . $productImage->getWidth() . 'px;'
-                . 'top:' . $productImage->getHeight() . 'px;"';
-        }
-        $name = $block->escapeJsQuote($_product->getName(), '"');
-        $image_html = preg_replace('/alt=".*?"/', 'alt="'. $name .'"', $productImage->toHtml()); // fixed name have quotes
-        $classes = isset($magic_pin[$key]['classes']) ? $magic_pin[$key]['classes'] . 'info' :  'info';
-        $add_options = array(
-            'classes'       => $classes,
-            'marker_pin'    => $icon,
-            'markerSrc'     => $icon,
-            'product_title' => $_product->getName(),
-            'product_link'  => $_product->getProductUrl(),
-            'product_img'   => $image_html,
-        );
-        $magic_pin[$key] = array_merge($magic_pin[$key], $add_options);
-    }
-}
-
-$show_img = true;
-$show_price = true;
-$pin_rand_id = 'magic_pin_' . $uniqid;
-// if(is_array($magic_pin)){
-//     foreach ($magic_pin as $key => $value) {
-//         if(isset($value['content'])){
-//             $magic_pin[$key]['content'] = $block->escapeJsQuote($value['content'], '"');
-//         }           
-//     }
-// }
-$data_pin = json_encode(array($pin_rand_id => $magic_pin));
-?>
-<div class="alo-item">
-    <div class="<?php echo $selector ?> lookbook">
-        <div style="max-width:<?php echo $width_image ?>px" class="magic-pin-banner-wrap" data-pin="<?php /* @escapeNotVerified */ echo $this->escapeHtml($data_pin) ?>">
-            <img class="magic_pin_image" src="<?php /* @escapeNotVerified */ echo $image_pin ?>" data-easypin-id="<?php echo $pin_rand_id ?>" alt="<?php /* @escapeNotVerified */ echo $lookbook->getTitle() ?>" />
-            <div style="display:none;" class="magic-easypin-tpl">
-                <popover class="popover">
-                    <div class="{[classes]}">
-                        <div class="main-product-pin">
-                            <div class="product-pin-wrap">
-                                <a title="{[product_title]}" href="{[product_link]}">
-                                    <div class="title-wrap">
-                                        <h5>{[product_title]}</h5>
-                                    </div>
-                                    <div class="price-wrap">{[marker_pin]}</div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </popover>
-                <marker class="marker">
-                    <div>
-                        <span class="alo-marker-icon-wrap icon">
-                            <span class="magic-marker-icon-bg">
-                                <span class="price">$</span>
-                            </span>
-                            <span class="action-effect" style="background-color:#ffffff;">&nbsp;</span>
-                        </span>         
-                    </div>
-                </marker>
-            </div>
-        </div>
-    </div>
-</div>
-<?Php
+    echo $block->getLayout()->createBlock('Magiccart\Lookbook\Block\Widget\Product')->setLookbook($lookbook)->setTemplate('item.phtml')->toHtml();
 }
 ?>
 </div>
 <script type="text/javascript">
     require([
         'jquery',
-        'magiccart/easing',
-        'magiccart/easypin',
         'magiccart/slick',
-        ], function($, easing, easypinShow, slick){
+        ], function($, slick){
             "use strict";
-			$( document ).ready(function($) {
-	            var el  = $('.<?php echo $selector_slider ?>');
-	            var iClass = '.alo-item';
-	            if($('body').hasClass('rtl')){
-	                el.attr('dir', 'rtl');
-	                el.data( 'rtl', true );
-	                // el.data( 'infinite', false );
-	                // el.data( 'slides-to-scroll', -1 );
-	            }
-	            var options = el.data();
-	            if(iClass === undefined){
-	                el.children().addClass('alo-item');
-	                iClass = '.alo-item';
-	            }
-	            var selector = el.selector;
-	            var classes = selector + ' '+ iClass;
-	            var padding = options.padding;
-	            var style = padding ? classes + '{float: left; padding-left: '+padding+'px; padding-right:'+padding+'px} ' + selector + '{margin-left: -'+padding+'px; margin-right: -'+padding+'px}' : '';
-	            if(options.slidesToShow){
-	                el.on('init', function(event, slick){
-	                    var magic_pin = $('.<?php echo $selector_slider ?> .magic-pin-banner-wrap');
-	                    if(magic_pin.length > 0) {
-	                        magic_pin.each(function() {
-	                            var _this = $(this);
-	                            if(!$(_this).hasClass('magic-inited')) {
-	                                $(_this).addClass('magic-inited');
-	                                var _init   = $(_this).data('pin');
-	                                var _img    = $(_this).find('img.magic_pin_image');
-	                                var _tpl    = $(_this).find('.magic-easypin-tpl');
-	                                if(_init && $(_img).length >0) {
-	                                    _img.attr('easypin-id', _img.data('easypin-id'));
-	                                    _tpl.attr('easypin-tpl', '');
-	                                    $(_img).easypinShow({
-	                                        data: _init,
-	                                        responsive: true,
-	                                        popover: {
-	                                            show: false,
-	                                            animate: false
-	                                        },
-	                                        success: function() {
-	                                            var marker = $(_this).find('.easypin-marker .icon');
-	                                            // if(marker.length > 0){
-	                                            //     var price = $(_this).find('.price-wrap');
-	                                            //     if(price.length > 0) marker.html(price.html());
-	                                            // }
-	                                            setInterval(function() {
-	                                                marker.toggleClass('effect');
-	                                            }, 2400);
-
-	                                        }
-	                                    });
-	                                }
-
-	                                $(_img).click(function() {
-	                                    $(_this).find('.easypin-popover').hide();
-	                                });
-	                                
-	                                $(document).on('keyup', function(e){
-	                                    if (e.keyCode === 27){
-	                                        $(_img).click();
-	                                    }
-	                                });
-	                            }
-	                        });
-	                    }
-	                });
-	                var slider = el.slick(options);
-	            }
-			});
+            $( document ).ready(function($) {
+                var el  = $('.<?php echo $selector_slider ?>');
+                var iClass = '.alo-item';
+                if($('body').hasClass('rtl')){
+                    el.attr('dir', 'rtl');
+                    el.data( 'rtl', true );
+                    // el.data( 'infinite', false );
+                    // el.data( 'slides-to-scroll', -1 );
+                }
+                var options = el.data();
+                if(iClass === undefined){
+                    el.children().addClass('alo-item');
+                    iClass = '.alo-item';
+                }
+                var selector = el.selector;
+                var classes = selector + ' '+ iClass;
+                var padding = options.padding;
+                var style = padding ? classes + '{float: left; padding-left: '+padding+'px; padding-right:'+padding+'px} ' + selector + '{margin-left: -'+padding+'px; margin-right: -'+padding+'px}' : '';
+                if(options.slidesToShow){
+                    var slider = el.slick(options);
+                }
+            });
     });
 </script>

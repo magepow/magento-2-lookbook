@@ -1,4 +1,9 @@
 var config = {
+	map: {
+        '*': {
+            magiccartLookbook: 'Magiccart_Lookbook/js/lookbook'
+        }
+    },
 	paths: {
 		'magiccart/easypin'		: 'Magiccart_Lookbook/js/jquery.easypin.min',
 	},
@@ -7,5 +12,4 @@ var config = {
 			deps: ['jquery', 'magiccart/easing']
 		},
 	}
-
 };

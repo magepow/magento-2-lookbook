@@ -11,18 +11,20 @@
  */
  ?>
 <?php
+$lookbook   = $this->getLookbook();
+if(!$lookbook) return;
 $uniqid     = uniqid();
 $selector   = 'alo-lookbook-'.$uniqid;
-$options    = json_decode($this->getOptions(), true);
+$options    = json_decode($lookbook->getOptions(), true);
 if(!isset($options['magic_pin'])) return;
 $magic_pin  = $options['magic_pin'];
 $productIds = array();
-$image_pin  = $this->getPinImageUrl($this->getData('image'));
+$image_pin  = $this->getPinImageUrl($lookbook->getData('image'));
 $width_image = 0;
 foreach ($magic_pin as $key => $item) {
     if(isset($item['product_id'])) $productIds[$key] = $item['product_id'];
     if($key == 'canvas'){
-    	$magic_pin['canvas']['src'] = $this->getPinImageUrl($this->getData('image'));
+    	$magic_pin['canvas']['src'] = $this->getPinImageUrl($lookbook->getData('image'));
     	$width_image = $magic_pin['canvas']['width'];
     } 
 }

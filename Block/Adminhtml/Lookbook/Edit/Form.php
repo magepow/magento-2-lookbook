@@ -6,7 +6,7 @@
  * @license     http://www.magiccart.net/license-agreement.html
  * @Author: DOng NGuyen<nguyen@dvn.com>
  * @@Create Date: 2018-05-16 10:40:51
- * @@Modify Date: 2018-06-27 16:12:20
+ * @@Modify Date: 2020-07-23 16:12:20
  * @@Function:
  */
 
@@ -200,6 +200,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'title' => __('Status'),
                 'name' => 'status',
                 'options' => Status::getAvailableStatuses(),
+                'value' => 1,
             ]
         );
 
