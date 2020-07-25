@@ -2,7 +2,7 @@ define([
     'jquery',
     'magiccart/easing',
     'magiccart/easypin',
-  	'jquery-ui-modules/widget'
+    'jquery-ui-modules/widget'
     ], function ($, easing, easypinShow) {
         'use strict';
 
@@ -23,7 +23,7 @@ define([
                         if(!$(_this).hasClass('magic-inited')) {
                             $(_this).addClass('magic-inited');
                             var _init   = $(_this).data('pin');
-                            var _img    = $(_this).find('img.magic_pin_pb_image');
+                            var _img    = $(_this).find('img.magic_pin_image, img.magic_pin_pb_image');
                             var _tpl    = $(_this).find('.magic-easypin-tpl');
                             if(_init && $(_img).length >0) {
                                 _img.attr('easypin-id', _img.data('easypin-id'));
