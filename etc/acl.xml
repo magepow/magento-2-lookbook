@@ -17,6 +17,7 @@
 	        	<resource id="Magiccart_Lookbook::magiccart" title="Magiccart" sortOrder="10">
 	        	    <resource id="Magiccart_Lookbook::lookbook" title="Lookbook" sortOrder="10">
 	        	        <resource id="Magiccart_Lookbook::lookbook_lookbook" title="Lookbook" sortOrder="10" />
+	        	        <resource id="Magiccart_Lookbook::lookbook_product" title="Lookbook" sortOrder="10" />
 	        	    </resource>
 	        	</resource>
 	            <resource id="Magento_Backend::stores">
