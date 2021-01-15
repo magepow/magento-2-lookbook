@@ -50,24 +50,20 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
         $this->buttonList->update('delete', 'label', __('Delete'));
         $this->buttonList->remove('delete');
 
-        if ($this->_isAllowedAction('Lookbook_Product::save')) {
-            $this->buttonList->update('save', 'label', __('Save Lookbook'));
-            $this->buttonList->add(
-                'saveandcontinue',
-                [
-                    'label' => __('Save and Continue Edit'),
-                    'class' => 'save',
-                    'data_attribute' => [
-                        'mage-init' => [
-                            'button' => ['event' => 'saveAndContinueEdit', 'target' => '#edit_form'],
-                        ],
-                    ]
-                ],
-                -100
-            );
-        } else {
-            $this->buttonList->remove('save');
-        }
+        $this->buttonList->update('save', 'label', __('Save Lookbook'));
+        $this->buttonList->add(
+            'saveandcontinue',
+            [
+                'label' => __('Save and Continue Edit'),
+                'class' => 'save',
+                'data_attribute' => [
+                    'mage-init' => [
+                        'button' => ['event' => 'saveAndContinueEdit', 'target' => '#edit_form'],
+                    ],
+                ]
+            ],
+            -100
+        );
  
         // if ($this->_coreRegistry->registry('lookbook')->getId()) {
             $this->buttonList->remove('reset');
