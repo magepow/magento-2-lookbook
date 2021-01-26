@@ -1,10 +1,53 @@
-# Magento 2 Lookbook Extention
-**Lookbook Magento 2 extension** (Lookbook Pin Products) is one of amazing extensions which helps you boost sales like a cross-selling art. Customers always like the trend and experienced look if you know how to lead them in. By using Lookbook Pin Products extension, you can make inspiration for customers during shopping more than using single products. It’s easy to create lookbooks on your own and show off your store style by combining a variety of products on a main photo. You can also leverage the beauty belong other accessories to highlight your target products.
+## Magento 2 Lookbook Pin Product
+ 
+**Lookbook Magento 2 extension (Lookbook Pin Products)** is one of the amazing extensions that help you boost sales like a cross-selling art. Customers always like the trend and experienced look if you know how to lead them in. By using the Lookbook Pin Products extension, you can make inspiration for customers during shopping more than using single products. It’s easy to create lookbooks on your own and show off your store style by combining a variety of products on the main photo. You can also leverage the beauty belonging to other accessories to highlight your target products.
 
-## Look In Frontend
+### Look In Frontend
 ![widget-img](https://github.com/magiccart/magento2-lookbook/blob/master/media/lookbook_frontend.jpg)
 
-### ✓ Install Magiccart Lookbook via composer (recommend)
+[![Latest Stable Version](https://poser.pugx.org/magiccart/lookbook/v/stable)](https://packagist.org/packages/magiccart/lookbook)
+[![Total Downloads](https://poser.pugx.org/magiccart/lookbook/downloads)](https://packagist.org/packages/magiccart/lookbook)
+
+### Highlight Features
+
+- Easy to create Lookbook Pin Products
+
+- Display any CMS page on your live store
+
+- Easy to Disable/ Enable Lookbook module
+
+- Enable to Pop up on your page
+
+- Ability to edit each pin name
+
+- Ability to display detail of each pin
+
+- Customer can purchase or go directly to a single product easily
+
+- Create eye-catching look
+
+### Benefit
+- Create image pin product with a few simple steps
+
+- Increase interaction between customers and products
+
+- Create theme product collection 
+
+- Show product structure
+
+- Selling multiple products in one image
+
+- Improve customer experience, increase conversions
+
+- Navigation customers go to product detail pages
+
+- Easy install and config.
+
+## How to use Magento 2 Lookbook pin product
+
+### How to install Lookbook extension? 
+#### ✓ Install Magiccart Lookbook via composer (recommend)
+
 Run the following command in Magento 2 root folder:
 
 ```
@@ -13,18 +56,7 @@ php bin/magento setup:upgrade
 php bin/magento setup:static-content:deploy -f
 ```
 
-## Highlight Features
-
-- Easy to create Lookbook Pin Products
-- Display any CMS page on your live store
-- Easy to Disable/ Enable Lookbook module
-- Enable to Pop up on your page
-- Ability to edit each pin name
-- Ability to display detail of each pin
-- Customer can purchase or go directly to the single product easily
-- Create eye-catching look
-
-## Magiccart Lookbook user guide
+### Magiccart Lookbook user guide
 [USE GUIDE](https://docs.alothemes.com/m2/theme/gecko/#sub70)
 
 ## Donation
@@ -100,5 +132,4 @@ If this project help you reduce time to develop, you can give me a cup of coffee
 * [Hire Magento Developer](https://magepow.com/hire-magento-developer.html)
 
 
-[![Latest Stable Version](https://poser.pugx.org/magiccart/lookbook/v/stable)](https://packagist.org/packages/magiccart/lookbook)
-[![Total Downloads](https://poser.pugx.org/magiccart/lookbook/downloads)](https://packagist.org/packages/magiccart/lookbook)
+
