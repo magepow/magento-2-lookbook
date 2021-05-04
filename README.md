@@ -7,6 +7,7 @@
 
 [![Latest Stable Version](https://poser.pugx.org/magiccart/lookbook/v/stable)](https://packagist.org/packages/magiccart/lookbook)
 [![Total Downloads](https://poser.pugx.org/magiccart/lookbook/downloads)](https://packagist.org/packages/magiccart/lookbook)
+[![Daily Downloads](https://poser.pugx.org/magiccart/lookbook/d/daily)](https://packagist.org/packages/magiccart/lookbook)
 
 ### Highlight Features
 
