@@ -20,7 +20,7 @@
             <class>separator-top</class>
             <label>Lookbook</label>
             <tab>magiccart</tab>
-            <resource>Magiccart_Lookbook::config_lookbook</resource>
+            <resource>Magiccart_Lookbook::config</resource>
             <group id="general" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>General</label>
 <!--                 <field id="enabled" translate="label comment" type="select" sortOrder="0"  showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">

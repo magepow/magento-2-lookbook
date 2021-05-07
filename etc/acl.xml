@@ -23,7 +23,7 @@
 	            <resource id="Magento_Backend::stores">
 	                <resource id="Magento_Backend::stores_settings">
 	                    <resource id="Magento_Config::config">
-	                        <resource id="Magiccart_Lookbook::config_lookbook" title="Lookbook" />
+	                        <resource id="Magiccart_Lookbook::config" title="Lookbook" />
 	                    </resource>
 	                </resource>
 	            </resource>
