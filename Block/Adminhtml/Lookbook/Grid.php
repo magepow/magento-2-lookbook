@@ -90,6 +90,17 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
         );
 
         $this->addColumn(
+            'identifier',
+            [
+                'header' => __('Identifier'),
+                'type' => 'text',
+                'index' => 'identifier',
+                'header_css_class' => 'col-identifier',
+                'column_css_class' => 'col-identifier',
+            ]
+        );
+
+        $this->addColumn(
             'image',
             [
                 'header' => __('Image'),

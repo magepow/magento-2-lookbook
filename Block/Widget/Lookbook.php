@@ -37,7 +37,8 @@ class Lookbook extends \Magento\Framework\View\Element\Template implements \Mage
         $collection = $this->_lookbook->getCollection()->addFieldToSelect('*')
                         ->addFieldToFilter('identifier', $identifier)
                         ->addFieldToFilter('type_id', $this->_typeId)
-                        ->addFieldToFilter('stores',array( array('finset' => 0), array('finset' => $store)));
+                        ->addFieldToFilter('stores',array( array('finset' => 0), array('finset' => $store)))
+                        ->setPageSize(1);
         $collection->getSelect()->order('order','ASC');
 
         $item = $collection->getFirstItem();

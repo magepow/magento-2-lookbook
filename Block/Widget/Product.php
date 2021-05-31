@@ -12,17 +12,31 @@
 
 namespace Magiccart\Lookbook\Block\Widget;
 
+use Magento\Framework\App\Filesystem\DirectoryList;
+
 class Product extends \Magento\Catalog\Block\Product\AbstractProduct implements \Magento\Widget\Block\BlockInterface
 {
+
+    const MEDIA_PATH = 'magiccart/lookbook';
+
     /**
      * @var \Magento\Framework\Url\Helper\Data
      */
     protected $urlHelper;
 
+    /**
+     * @var \Magento\Framework\Image\AdapterFactory
+     */
+    protected $_imageFactory;
+
      /**
      * @var \Magento\Backend\Model\UrlInterface
      */
     protected $backendUrl;
+
+    protected $_filesystem;
+
+    protected $_directory;
 
     protected $_productCollectionFactory;
 
@@ -47,14 +61,19 @@ class Product extends \Magento\Catalog\Block\Product\AbstractProduct implements 
     public function __construct(
         \Magento\Catalog\Block\Product\Context $context,
         \Magento\Framework\Url\Helper\Data $urlHelper,
+        \Magento\Framework\Image\AdapterFactory $imageFactory,
         \Magento\Backend\Model\UrlInterface $backendUrl,
         \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory,
         \Magento\Catalog\Model\Product\Visibility $catalogProductVisibility,
         \Magiccart\Lookbook\Model\LookbookFactory $lookbookFactory,
         array $data = []
     ) {
-        $this->urlHelper    = $urlHelper;
-        $this->backendUrl   = $backendUrl;
+        $this->urlHelper     = $urlHelper;
+        $this->_imageFactory = $imageFactory;
+        $this->backendUrl    = $backendUrl;
+        $this->_filesystem   = $context->getFilesystem();
+        $this->_directory    = $this->_filesystem->getDirectoryWrite(DirectoryList::MEDIA);
+
         $this->_productCollectionFactory = $productCollectionFactory;
         $this->_catalogProductVisibility = $catalogProductVisibility;
         $this->lookbookFactory = $lookbookFactory;
@@ -82,7 +101,8 @@ class Product extends \Magento\Catalog\Block\Product\AbstractProduct implements 
         $collection = $this->lookbookFactory->create()->getCollection()->addFieldToSelect('*')
                         ->addFieldToFilter('identifier', $identifier)
                         ->addFieldToFilter('type_id', $this->_typeId)
-                        ->addFieldToFilter('stores',array( array('finset' => 0), array('finset' => $store)));
+                        ->addFieldToFilter('stores',array( array('finset' => 0), array('finset' => $store)))
+                        ->setPageSize(1);
         $collection->getSelect()->order('order','ASC');
 
         $this->_lookbook = $collection->getFirstItem();
@@ -108,6 +128,27 @@ class Product extends \Magento\Catalog\Block\Product\AbstractProduct implements 
         return $productCollection;
      
      }
+
+    public function getLookImage()
+    {
+        $file = $this->getData('image');
+        if(!$file) return;
+        $absPath = $this->_filesystem->getDirectoryRead(DirectoryList::MEDIA)->getAbsolutePath() . $file;
+        if( !file_exists($absPath) ) return;
+        $_image = $this->_imageFactory->create();
+        $_image->open($absPath);
+        $image = new \Magento\Framework\DataObject();
+        if($_image){
+            $width  = $_image->getOriginalWidth();
+            $height = $_image->getOriginalHeight();
+            $url    = $this->getPinImageUrl($file);
+            $image->setData('width', $width);
+            $image->setData('height', $height);
+            $image->setData('url', $url);
+        }
+
+        return $image;
+    }
 
     public function getPinImageUrl($file)
     {
