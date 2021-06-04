@@ -11,6 +11,8 @@
  */
  ?>
 <?php
+$_helper = $this->helper('Magiccart\Lookbook\Helper\Data');
+if(!$_helper->getConfigModule('general/enabled')) return;
 $uniqid     = uniqid();
 $selector   = 'alo-lookbook-'.$uniqid;
 $options    = json_decode($this->getOptions(), true);

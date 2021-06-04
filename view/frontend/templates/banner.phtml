@@ -11,6 +11,8 @@
  */
  ?>
 <?php
+$_helper = $this->helper('Magiccart\Lookbook\Helper\Data');
+if(!$_helper->getConfigModule('general/enabled')) return;
 $uniqid = uniqid();
 $selector = 'alo-content-'.$uniqid;
 $options = json_decode($this->getOptions(), true);
@@ -43,7 +45,7 @@ $show_price = true;
 $pin_rand_id = 'magic_pin_' . $uniqid;
 $data_pin = json_encode(array($pin_rand_id => $magic_pin));
 ?>
-<div class="<?php echo $selector ?>">
+<div class="<?php echo $selector ?>" data-mage-init='{"magiccartLookbook": {}}'>
     <?php echo $this->getTitle() ? '<h2 class="title item">' . '<span>' . $this->getTitle() . '</span>' . '</h2>' : '' ?>
     <div class="lookbook">
         <div class="nasa-inner-wrap nasa-pin-banner-wrap" data-pin="<?php /* @escapeNotVerified */ echo $this->escapeHtml($data_pin) ?>">
@@ -88,68 +90,3 @@ $data_pin = json_encode(array($pin_rand_id => $magic_pin));
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    require([
-        'jquery',
-        'magiccart/easing',
-        'magiccart/easypin',
-        ], function($, easing, easypin){
-            "use strict";
-            if($('.nasa-pin-banner-wrap').length > 0) {
-                $('.nasa-pin-banner-wrap').each(function() {
-                    var _this = $(this);
-                    if(!$(_this).hasClass('nasa-inited')) {
-                        $(_this).addClass('nasa-inited');
-                        var _init = $(_this).data('pin');
-                        var _img = $(_this).find('img.nasa_pin_pb_image');
-                        
-                        if(_init && $(_img).length >0) {
-                            $(_img).easypinShow({
-                                // data: _init,
-                                data: '<?php echo $data_pin ?>',
-                                responsive: true,
-                                popover: {
-                                    show: false,
-                                    animate: false
-                                },
-                                each: function(index, data) {
-                                    return data;
-                                },
-                                error: function() {
-                                    
-                                },
-                                success: function() {
-                                	console.log('success');
-                                    // if($(_this).find('.nasa-product-pin .price.nasa-price-pin').length > 0){
-                                    //     $(_this).find('.nasa-product-pin .price.nasa-price-pin').each(function() {
-                                    //         var _pid = $(this).attr('data-product_id');
-                                    //         if($(_this).find('.nasa-price-pin-' + _pid).length > 0) {
-                                    //             $(this).html($(_this).find('.nasa-price-pin-' + _pid).html());
-                                    //         }
-                                    //     });
-                                    // }
-                                    
-                                    // if($(_this).hasClass('nasa-has-effect')) {
-                                    //     setInterval(function() {
-                                    //         $(_this).find('.nasa-marker-icon-wrap').toggleClass('nasa-effect');
-                                    //     }, 2400);
-                                    // }
-                                }
-                            });
-                        }
-                        
-                        $(_img).click(function() {
-                            $(_this).find('.easypin-popover').hide();
-                        });
-                        
-                        $(document).on('keyup', function(e){
-                            if (e.keyCode === 27){
-                                $(_img).click();
-                            }
-                        });
-                    }
-                });
-            }
-    });
-</script>
-

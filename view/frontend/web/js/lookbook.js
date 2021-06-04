@@ -1,7 +1,7 @@
 define([
     'jquery',
-    'magiccart/easing',
-    'magiccart/easypin',
+    'easing',
+    'easypin',
     'jquery-ui-modules/widget'
     ], function ($, easing, easypinShow) {
         'use strict';

@@ -91,12 +91,8 @@
 </div>
 </script>
 <script type="text/javascript">
-	require([
-		'jquery',
-		'magiccart/easing',
-		'magiccart/easypin',
-		'magiccart/select2',
-		], function($, easing, easypin){
+	require(['jquery','easing', 'easypin','select2',], 
+		function($, easing, easypin){
 		    var magic_pin = {
 		        // 'url_search': '<?php echo $this->getUrl('search/ajax/suggest', $params); ?>',
 		        'url_search': '<?php echo $this->getUrl('mui/index/render/'); ?>',
