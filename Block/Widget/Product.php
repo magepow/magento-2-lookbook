@@ -122,11 +122,15 @@ class Product extends \Magento\Catalog\Block\Product\AbstractProduct implements 
 
     public function getProductCollection($producIds)
     {
-        $productCollection = $this->_productCollectionFactory->create();
-        $productCollection->addAttributeToSelect('*')
-                ->addAttributeToFilter('entity_id', array('in' => $producIds));
+        $productCollection = $this->_productCollectionFactory->create()
+                                ->addAttributeToSelect('*')
+                                ->addAttributeToFilter('entity_id', array('in' => $producIds))
+                                ->addStoreFilter()
+                                ->addMinimalPrice()
+                                ->addFinalPrice()
+                                ->addTaxPercents();
+
         return $productCollection;
-     
      }
 
     public function getLookImage()
