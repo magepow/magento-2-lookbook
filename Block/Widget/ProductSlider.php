@@ -26,8 +26,7 @@ class ProductSlider extends Product
         $collection  = $this->lookbookFactory->create()->getCollection()->addFieldToSelect('*')
                         ->addFieldToFilter('identifier', array('in' => $identifiers))
                         ->addFieldToFilter('type_id', $this->_typeId)
-                        ->addFieldToFilter('stores',array( array('finset' => 0), array('finset' => $store)))
-                        ->setPageSize(1);
+                        ->addFieldToFilter('stores',array( array('finset' => 0), array('finset' => $store)));
         $collection->getSelect()->order('order','ASC');
         if(!$collection){
             echo '<div class="message-error error message">Identifier "'. $identifiers . '" not exist.</div> ';          
