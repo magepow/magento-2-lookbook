@@ -2,7 +2,7 @@ define([
     'jquery',
     'easing',
     'easypin',
-    'jquery-ui-modules/widget'
+    'jquery/ui'
     ], function ($, easing, easypinShow) {
         'use strict';
 
