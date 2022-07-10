@@ -43,12 +43,12 @@ define([
                                 });
                             }
                             
-                            $(_img).click(function() {
+                            $(_img).on('click', function() {
                                 $(_this).find('.easypin-popover').hide();
                             });
                             
                             $(document).on('keyup', function(e){
-                                if (e.keyCode === 27) $(_img).click();
+                                if (e.keyCode === 27) $(_img).trigger('click');
                             });
                         }
                     });
