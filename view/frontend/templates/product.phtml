@@ -66,6 +66,7 @@ $data_pin = $jsonHelper->jsonEncode(array($pin_rand_id => $magic_pin));
     <?php echo $this->getTitle() ? '<h2 class="title item">' . '<span>' . $this->getTitle() . '</span>' . '</h2>' : '' ?>
     <div class="lookbook">
         <div style="max-width:<?php echo $width_image ?>px" class="magic-inner-wrap magic-pin-banner-wrap" data-pin="<?php /* @escapeNotVerified */ echo $this->escapeHtml($data_pin) ?>">
+            <script class="json-data-pin" type="application/json"><?php echo $data_pin ?></script>
             <img class="magic_pin_pb_image" src="<?php /* @escapeNotVerified */ echo $image_pin->getUrl() ?>" width="<?php echo $image_pin->getWidth() ?>" height="<?php echo $image_pin->getHeight() ?>"data-easypin-id="<?php echo $pin_rand_id ?>" alt="<?php /* @escapeNotVerified */ echo $this->getTitle() ?>" />
 			<div style="display:none;" class="magic-easypin-tpl">
 			    <popover>

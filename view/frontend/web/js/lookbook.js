@@ -22,9 +22,15 @@ define([
                         var _this = $(this);
                         if(!$(_this).hasClass('magic-inited')) {
                             $(_this).addClass('magic-inited');
-                            var _init   = $(_this).data('pin');
-                            var _img    = $(_this).find('img.magic_pin_image, img.magic_pin_pb_image');
-                            var _tpl    = $(_this).find('.magic-easypin-tpl');
+                            var _init    = $(_this).data('pin'),
+                                _img     = $(_this).find('img.magic_pin_image, img.magic_pin_pb_image'),
+                                _tpl     = $(_this).find('.magic-easypin-tpl');
+                            $(_this).find('popover a').each(function() {
+                                $(this).attr('href', decodeURI($(this).attr('href')));
+                            });;
+                            if(_init == undefined){
+                                _init = _this.find('.json-data-pin').text();
+                            }
                             if(_init && $(_img).length >0) {
                                 _img.attr('easypin-id', _img.data('easypin-id'));
                                 _tpl.attr('easypin-tpl', '');
@@ -35,20 +41,20 @@ define([
                                     each: function(index, data) {
                                         return data;
                                     },
-                                    error: function() {
-                                        
+                                    error: function(e) {
+                                        console.log(e);  
                                     },
                                     success: function() {
                                     }
                                 });
                             }
                             
-                            $(_img).on('click', function() {
+                            $(_img).click(function() {
                                 $(_this).find('.easypin-popover').hide();
                             });
                             
                             $(document).on('keyup', function(e){
-                                if (e.keyCode === 27) $(_img).trigger('click');
+                                if (e.keyCode === 27) $(_img).click();
                             });
                         }
                     });
