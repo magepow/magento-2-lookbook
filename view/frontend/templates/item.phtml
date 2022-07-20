@@ -64,7 +64,8 @@ $data_pin = json_encode(array($pin_rand_id => $magic_pin));
 <div class="<?php echo $selector ?>" data-mage-init='{"magiccartLookbook": {}}'>
     <?php echo $this->getTitle() ? '<h2 class="title item">' . '<span>' . $this->getTitle() . '</span>' . '</h2>' : '' ?>
     <div class="lookbook">
-        <div style="max-width:<?php echo $width_image ?>px" class="magic-inner-wrap magic-pin-banner-wrap" data-pin="<?php /* @escapeNotVerified */ echo $this->escapeHtml($data_pin) ?>">
+        <div style="max-width:<?php echo $width_image ?>px" class="magic-inner-wrap magic-pin-banner-wrap">
+            <script class="json-data-pin" type="application/json"><?php echo $data_pin ?></script>
             <img class="magic_pin_pb_image" src="<?php /* @escapeNotVerified */ echo $image_pin ?>" data-easypin-id="<?php echo $pin_rand_id ?>" alt="<?php /* @escapeNotVerified */ echo $this->getTitle() ?>" />
 			<div style="display:none;" class="magic-easypin-tpl">
 			    <popover>
