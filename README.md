@@ -1,3 +1,5 @@
+[<img src="https://github.com/magepow/themeforest/blob/master/shopify/shopify_affiliate.jpg" >](https://shopify.pxf.io/VyL446)
+
 ## Magento 2 Lookbook Pin Product
  
 **Lookbook Magento 2 extension (Lookbook Pin Products)** is one of the amazing extensions that help you boost sales like a cross-selling art. Customers always like the trend and experienced look if you know how to lead them in. By using the Lookbook Pin Products extension, you can make inspiration for customers during shopping more than using single products. It’s easy to create lookbooks on your own and show off your store style by combining a variety of products on the main photo. You can also leverage the beauty belonging to other accessories to highlight your target products.
