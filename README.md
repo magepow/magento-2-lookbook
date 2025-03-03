@@ -70,7 +70,7 @@
 
 * [Magento 2 Recent Order Notification](https://magepow.net/magento-2-recent-order-notification.html)
 
-* [Magento 2 Categories Extension](https://magepow.net/magento-2-categories-extension.htmlExtension](https://magepow.net/magento-2-categories-extension.html)
+* [Magento 2 Categories Extension](https://magepow.net/magento-2-categories-extension.html)
 
 * [Magento 2 Sticky Cart](https://magepow.net/magento-sticky-add-to-cart.html)
 
