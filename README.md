@@ -49,7 +49,10 @@
 ## How to use Magento 2 Lookbook pin product
 
 ### Buy it
-[Buy it on Magepow](https://magepow.com/lookbook-pin-products.html)
+[Buy it on Magepow](https://magepow.com/magento-2-lookbook-pin-products.html)
+
+### Version support Hyva Theme
+[<img src="https://github.com/magepow/magento-2-sticky-cart/blob/main/media/hyva-version.png" width="250" height="100">](https://magepow.com/magento-2-lookbook-pin-products.html)
 
 ### Magiccart Lookbook user guide
 [USE GUIDE](https://docs.alothemes.com/m2/theme/gecko/#sub70)
